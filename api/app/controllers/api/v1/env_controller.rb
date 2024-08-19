@@ -15,11 +15,19 @@ class Api::V1::EnvController < ApplicationController
       team: env.team
     )
 
-    env.save ? render json: env, status: 200 : render json: { error: "Error creating env." }
+    if env.save
+      render json: env, status: 200
+    else 
+      render json: { error: "Error creating env." }
+    end
   end
 
   def show
     env = Env.find_by(id: params[:id])
-    env ? render json: env, status: 200 : render json: { error: "Env not found." }
+    if env 
+      render json: env, status: 200
+    else 
+      render json: { error: "Env not found." }
+    end
   end
 end
